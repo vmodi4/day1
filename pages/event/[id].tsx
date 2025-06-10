@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
-import events from "../data"; // Import your events data
-import "../css/IndividualEventPage.css";
+import events from "../../data"; // Import your events data
+import "../../css/id.module.css";
 import Image from "next/image"; // Use Next.js Image component for optimized images
-import useCart from "../hooks/useCart"; // Custom hook for cart functionality
+import {useCart} from "../../hooks/CartContext"; // Custom hook for cart functionality
 
 function IndividualEventPage() {
   const router = useRouter();
@@ -13,7 +13,7 @@ function IndividualEventPage() {
   const event = events.find((event) => event.id === parseInt(id as string)); // Find the event by ID
 
   if(!event) {
-    return <p>Error, not found</p>
+    return <p>event not found</p>
   }
  
   
@@ -21,7 +21,7 @@ function IndividualEventPage() {
   return (
     <div className="individual-event-page">
       <h1>{event.title}</h1> 
-      <Image src={event.url} alt={event.title} />
+      <Image src={event.url} alt={event.title} width = {600} height = {400} />
       <p>{event.description}</p>
       <p>Location: {event.location}</p>
       <p>Time: {event.time}</p>

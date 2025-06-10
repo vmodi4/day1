@@ -1,6 +1,6 @@
 import React from "react";
-import "../css/Cart.css";
-import useCart from "@/hooks/useCart";
+import "../css/Cart.module.css";
+import {useCart }from "../hooks/CartContext";
 
 function Cart() {
      const Cart = useCart(); // Use the custom cart hook

@@ -1,8 +1,9 @@
 import EventCard from "../components/EventCard";
 import { useState } from "react";
 import events from "../data"
-import "../css/index.css";
-import useCart from "../hooks/useCart"; // Custom hook for cart functionality
+import "../css/index.module.css"
+
+import {useCart} from "../hooks/CartContext"; // Custom hook for cart functionality
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");

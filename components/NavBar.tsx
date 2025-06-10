@@ -1,6 +1,6 @@
 import Link from "next/link";
-import "../css/NavBar.css";
-import useCart from "../hooks/useCart"; 
+import "../css/NavBar.module.css";
+import {useCart} from "../hooks/CartContext"; 
 
 
 

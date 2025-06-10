@@ -1,8 +1,8 @@
 import React from "react";
-import "../css/EventCard.css";
+
 import {useRouter} from "next/router"; // Use Next.js router for navigation
 import events from "../data"; 
-import useCart from "../hooks/useCart"; // Custom hook for cart functionality
+import {useCart} from "../hooks/CartContext"; // Custom hook for cart functionality
 
 // create an arrow function to handle the click event
 

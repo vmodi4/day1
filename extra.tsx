@@ -7,10 +7,12 @@ type CartItem = {
     [key: string]: any;
 }
 
+
 function useCart() {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
     const add = (item: CartItem) => {
+        console.log("Adding item to cart:", item)
         setCartItems((prevItems) => [...prevItems, item]);
     };
 
