@@ -1,0 +1,26 @@
+INSERT INTO events (title, description, event_date, created_at)
+VALUES
+  ('Tech Conference 2025', 'Annual technology summit featuring speakers from major tech firms.', '2025-09-15', NOW()),
+  ('Music Festival', 'A weekend of live music performances from top artists.', '2025-07-20', NOW()),
+  ('Art Exhibition', 'Display of modern art by emerging artists.', '2025-06-25', NOW()),
+  ('Startup Pitch Night', 'Entrepreneurs pitch ideas to a panel of investors.', '2025-08-05', NOW()),
+  ('Marathon 10K', 'City-wide 10km marathon race for all age groups.', '2025-10-02', NOW()),
+  ('Food Truck Fair', 'Local food trucks serve diverse cuisines in the downtown park.', '2025-07-12', NOW()),
+  ('Blockchain Workshop', 'Hands-on workshop on blockchain development.', '2025-08-22', NOW()),
+  ('Coding Bootcamp Graduation', 'Graduation ceremony for coding bootcamp students.', '2025-07-01', NOW()),
+  ('Film Premiere: The Journey', 'Premiere of an indie adventure film with Q&A.', '2025-06-28', NOW()),
+  ('Book Signing with Jane Doe', 'Meet the author of the bestselling novel "River of Echoes".', '2025-08-17', NOW()),
+  ('Community Cleanup Day', 'Volunteer to clean and beautify neighborhood parks.', '2025-07-05', NOW()),
+  ('Science Fair', 'High school students present innovative science projects.', '2025-09-10', NOW()),
+  ('Wine & Cheese Tasting', 'Sampling of local wines and artisan cheeses.', '2025-07-18', NOW()),
+  ('Open Mic Night', 'Local talents perform poetry, comedy, and music.', '2025-06-30', NOW()),
+  ('Photography Workshop', 'Learn basics of DSLR photography from professionals.', '2025-08-10', NOW()),
+  ('Historical Tour', 'Guided tour of the city’s historical landmarks.', '2025-07-22', NOW()),
+  ('Charity Gala', 'Fundraising event for children’s education.', '2025-10-15', NOW()),
+  ('Yoga in the Park', 'Free outdoor yoga session open to the public.', '2025-07-03', NOW()),
+  ('Astronomy Night', 'Stargazing with telescopes and expert guides.', '2025-08-25', NOW()),
+  ('Board Game Night', 'Bring your favorite games and meet fellow enthusiasts.', '2025-07-14', NOW());
+
+  // this wil populate the events table. 
+
+  

@@ -1,0 +1,61 @@
+// need to use global SASS and then we need to use Material UI- for the components.
+
+<div className="event-card">
+      <div className="event-image">
+        <img src={event.url} alt={event.title} />
+      </div>
+      <div className="event-info">
+        <h3>{event.title}</h3>
+        <p>Price of Event: {event.price}</p>
+        <div className="event-buttons">
+          <Button variant = "contained"  onClick={() => Cart.add(event)}>Add to Cart</Button>
+          <Button variant = "contained" onClick={handleMoreInfo}>More Info</Button>
+        </div>
+      </div>
+    </div>
+
+    // this is the eventcard tsx(markup) - I'm trying to implement the Material UI Card component with it. 
+
+
+    Making sure there are no duplicates in email. 
+
+    const [user_email, setEmail] = useState([])
+    // do the same for password
+
+    const setEmail
+
+
+    Questions to ask- Have an option for user to pick the time range in which the events should be at. 
+    For this to happen, we need three parts
+    we need the api route from pages/api/events.ts
+    we need the actual request on the home page of the app. 
+
+    on the home page, create a filter events- (box, button, search)- allows them to filter by date
+    Once they click ready/submit, it will route them to a filteredEvents page + call the api to properly 
+
+
+    const existingUser = await db.select().from(userTable).where(eq(userTable.email, email)).limit(1);
+    const user = await.db.select.from(eventTable).where // orm is so much better
+
+    if(existingUser!= null) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // 1. Let's populate the events table with events, and then use a get request to fetch the desired events instead of using hardcoded data. 
+
+
+    // need to add back that admin page, and allow for the creation + deletion of events
+
+    // import this back into index: import events from "../data"
+
+    // I'm going to need another api call for event
+
+    // I need to create user sessions(meaning once they refresh the page they don't get logged out)
+
+    // for the create/update event, we can keep that in the admin page. I
+
+    Idea for how it will work: within the same UI component- have a create + update button
+
+    create- opens up a form with the necessary fields- make sure the correct data types are required 
+    then check if the databaase logic(when it comes to start + end date are valid). This will be a post request to the events database
+    (Don't want re-render/call the events again)

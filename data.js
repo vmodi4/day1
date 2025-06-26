@@ -1,4 +1,4 @@
-
+//import event from "@jstiava/chronos/events"; 
 
 
 const events = [
@@ -75,5 +75,16 @@ const events = [
         description: "Explore the latest art exhibitions and collections.",
     },
 ];
+
+/*class EventManger {
+    constructor(events) {
+        this.events = events.map((event) => new Event(event)); 
+    }
+}
+
+const eventManager = new EventManger(prev_events); 
+// 
+const events */
+
 
 export default events; 

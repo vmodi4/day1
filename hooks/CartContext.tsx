@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 // Define the type for a cart item
 type CartItem = {
   id: number;
-  title: string;
+  name: string;
   price: string;
   [key: string]: any; // Optional additional properties
 };
@@ -26,8 +26,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const add = (item: CartItem) => {
-    console.log("Adding item to cart:", item);
+    if (cartItems.some((cartItem) => cartItem.id === item.id)) {
+      // If the item is already in the cart, you can choose to update it or ignore
+      console.log("Item already in cart:", item);
+      return;
+    }
     setCartItems((prevItems) => [...prevItems, item]);
+    // 
   };
 
   const remove = (id: number) => {
