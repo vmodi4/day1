@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"; // Import JSON Web Token library
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    const { password, email } = req.body; // Extract email and password from request body
+    const { password, email, role } = req.body; // Extract email and password from request body
 
     // Validate request body
     if (!email || !password) {
@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       // Retrieve user data from the database
       const user = await db
-        .select({ email: userTable.email, password: userTable.password, id: userTable.id })
+        .select({ email: userTable.email, password: userTable.password, id: userTable.id, role: userTable.role })
         .from(userTable)
         .where(eq(userTable.email, email as string))
         .limit(1);
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Generate a JWT token
       const token = jwt.sign(
-        { id: existingUser.id, email: existingUser.email }, // Payload
+        { id: existingUser.id, email: existingUser.email, role: existingUser.role}, // Payload
         process.env.JWT_SECRET!, // Secret key
         { expiresIn: "4h" } // Token expiration
       );

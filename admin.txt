@@ -1,0 +1,186 @@
+import React, { useState } from "react";
+import { useAuth } from "../hooks/AuthContext";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Box } from "@mui/material";
+
+function Admin() {
+  const { admin } = useAuth(); // Use isAdmin for checking admin status
+
+  // State for managing dialog visibility
+  const [openCreate, setOpenCreate] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  // Handlers for opening and closing dialogs
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
+
+  const handleOpenUpdate = () => setOpenUpdate(true);
+  const handleCloseUpdate = () => setOpenUpdate(false);
+
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  // Handlers for form submissions
+  const handleCreateEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+   const formData = new FormData(e.currentTarget as HTMLFormElement);
+   const eventData = Object.fromEntries(formData.entries());
+   // contains all the form data into an object and calls the edit api route. 
+   try {
+    const response = await fetch("/api/events/edit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(eventData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(data.message); // Show success message
+      handleCloseCreate(); // Close the dialog
+    } else {
+      alert(data.message); // Show error message
+    }
+  } catch (error) {
+    console.error("Error creating event:", error);
+    alert("An error occurred. Please try again.");
+  }
+  
+   
+    
+  };
+
+  const handleUpdateEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Updating event...");
+    handleCloseUpdate();
+  };
+
+  const handleDeleteEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const id = formData.get("id"); // Get the event ID from the form
+  
+    if (!id) {
+      alert("Event ID is required to delete an event.");
+      return;
+    }
+
+  
+    try {
+      const response = await fetch(`/api/events/edit`, {
+        method: "DELETE",
+        include: id; 
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert(data.message); // Show success message
+        handleCloseDelete(); // Close the dialog
+      } else {
+        alert(data.message); // Show error message
+      }
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  if (!admin) {
+    return <p>You do not have access to this page.</p>; // Show a fallback message for non-admin users
+  }
+
+  return (
+    <div className="admin-page">
+      <h1>Admin Dashboard</h1>
+      <p>Welcome to the admin dashboard!</p>
+
+      {/* Buttons for admin actions */}
+      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleOpenCreate}>
+          Create Event
+        </Button>
+        <Button variant="contained" color="secondary" onClick={handleOpenUpdate}>
+          Update Event
+        </Button>
+        <Button variant="contained" color="error" onClick={handleOpenDelete}>
+          Delete Event
+        </Button>
+      </Box>
+
+      {/* Create Event Dialog */}
+      <Dialog open={openCreate} onClose={handleCloseCreate}>
+  <DialogTitle>Create Event</DialogTitle>
+  <DialogContent>
+    <Box component="form" onSubmit={handleCreateEvent} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <TextField label="Event Name" name="name" fullWidth required />
+      <TextField label="Description" name="description" fullWidth required />
+      <TextField label="Subtitle" name="subtitle" fullWidth required />
+      <TextField label="Event Date" name="event_date" type="date" fullWidth required InputLabelProps={{ shrink: true }} />
+      <TextField label="Start Time" name="start_datetime" type="datetime-local" fullWidth required InputLabelProps={{ shrink: true }} />
+      <TextField label="End Time" name="end_datetime" type="datetime-local" fullWidth required InputLabelProps={{ shrink: true }} />
+      <TextField label="Price" name="price" type="number" fullWidth required />
+      <TextField label="Image URL" name="image_url_2" fullWidth required />
+      <DialogActions>
+        <Button type="submit" variant="contained" color="primary">
+          Create
+        </Button>
+        <Button onClick={handleCloseCreate} variant="outlined">
+          Cancel
+        </Button>
+      </DialogActions>
+    </Box>
+  </DialogContent>
+</Dialog>
+
+      {/* Update Event Dialog */}
+      <Dialog open={openUpdate} onClose={handleCloseUpdate}>
+  <DialogTitle>Update Event</DialogTitle>
+  <DialogContent>
+    <Box component="form" onSubmit={handleUpdateEvent} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <TextField label="Event ID" name="id" fullWidth required /> {/* Event ID is required for updating */}
+      <TextField label="Event Name" name="name" fullWidth />
+      <TextField label="Description" name="description" fullWidth />
+      <TextField label="Subtitle" name="subtitle" fullWidth />
+      <TextField label="Event Date" name="event_date" type="date" fullWidth InputLabelProps={{ shrink: true }} />
+      <TextField label="Start Time" name="start_datetime" type="datetime-local" fullWidth InputLabelProps={{ shrink: true }} />
+      <TextField label="End Time" name="end_datetime" type="datetime-local" fullWidth InputLabelProps={{ shrink: true }} />
+      <TextField label="Price" name="price" type="number" fullWidth />
+      <TextField label="Image URL" name="image_url_2" fullWidth />
+      <DialogActions>
+        <Button type="submit" variant="contained" color="secondary">
+          Update
+        </Button>
+        <Button onClick={handleCloseUpdate} variant="outlined">
+          Cancel
+        </Button>
+      </DialogActions>
+    </Box>
+  </DialogContent>
+</Dialog>
+
+      {/* Delete Event Dialog */}
+      <Dialog open={openDelete} onClose={handleCloseDelete}>
+        <DialogTitle>Delete Event</DialogTitle>
+        <DialogContent>
+          <Box component="form" onSubmit={handleDeleteEvent} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <TextField label="Event ID" fullWidth required />
+            <DialogActions>
+              <Button type="submit" variant="contained" color="error">
+                Delete
+              </Button>
+              <Button onClick={handleCloseDelete} variant="outlined">
+                Cancel
+              </Button>
+            </DialogActions>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+export default Admin;

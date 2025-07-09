@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 
 import {useRouter} from "next/router"; // Use Next.js router for navigation
-import events from "../data"; 
+
 import {useCart} from "../hooks/CartContext"; // Custom hook for cart functionality
 import {useAuth} from "../hooks/AuthContext"; // Custom hook for authentication context
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import {Event} from "../../components/EventCard"; // this is just importing the interface(not the actual events)
 
-import "../../css/id.module.css";
+
 import Image from "next/image"; // Use Next.js Image component for optimized images
 import {useCart} from "../../hooks/CartContext"; // Custom hook for cart functionality
 import db from "../../data/db"; // Import your events data
@@ -15,7 +15,7 @@ import {useAuth} from "../../hooks/AuthContext"; // Custom hook for authenticati
 function IndividualEventPage() {
   const router = useRouter();
   const Cart = useCart(); 
-  const {isAuthenticated, user} = useAuth(); // Use the custom authentication hook
+  const {isAuthenticated} = useAuth(); // Use the custom authentication hook
   // created own cart hook
   const {id} = router.query
   const event_id = parseInt(id as string); 

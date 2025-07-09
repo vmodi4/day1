@@ -17,10 +17,5 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["via.placeholder.com"], // Add external image domain here
   },
-};
+ };
 
-
-
-
-
-export default nextConfig;

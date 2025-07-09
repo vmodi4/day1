@@ -59,3 +59,24 @@
     create- opens up a form with the necessary fields- make sure the correct data types are required 
     then check if the databaase logic(when it comes to start + end date are valid). This will be a post request to the events database
     (Don't want re-render/call the events again)
+
+
+    Authentication + Authorization design choice: 
+
+    1. Allow non-signed in users to view the events(not able to add to cart or view the individual event page)
+    2. Normal signed in users are able to add to cart + look at more info
+    3. Admin is allowed to create + update the events that are already there. (Need to set only one user from the database)
+
+
+    setisAuthenticated should be verified through the cookies and not just directly after the sign in page. 
+
+
+    // in the users table, benefits of creating a role column- if the role queried from the database == admin
+    // then we setisAdmin boolean variable to true. 
+   
+
+   IMPORTANT the user with admin access is email: user8@gmail.com, password: 1234 
+
+   // with the update event, I will need to include preset fields. 
+
+   // creating events is the

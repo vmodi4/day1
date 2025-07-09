@@ -1,7 +1,7 @@
 import EventCard from "../components/EventCard";
 import { useState, useEffect } from "react";
 
-import "../css/index.module.css"
+//import "../css/index.module.css"
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {useAuth} from "../hooks/AuthContext"; // Custom hook for authentication context
@@ -42,7 +42,7 @@ function Home() {
 
     fetchEvents();
   }, []);
-  // empty dependency array means this effect runs once when the component mounts
+  // Changed the dependency array to update when events changes. (nvm keep empty dependency array)
   
 
   const filteredEvents = events.filter((event) =>

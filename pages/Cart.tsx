@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Cart.module.css";
+
 import {useCart }from "../hooks/CartContext";
 
 function Cart() {

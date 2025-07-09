@@ -1,15 +1,22 @@
 import React from "react";
 import Link from "next/link";
 import { useAuth } from "../hooks/AuthContext";
-import { useCart } from "../hooks/CartContext";
+import { useCart } from "../hooks/CartContext"; 
+import {useRouter} from "next/router"; // Use Next.js router for navigation
 
 function NavBar() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, admin } = useAuth();
+  // this state is globally managed. 
   
+  const router = useRouter(); 
   const Cart = useCart();
 
   const logout = () => {
-    console.log("Logout function called");
+    // Set the authenticated state to false
+    setIsAuthenticated(false);
+    router.push("/"); 
+
+    // pushing to the home page works. 
   }
 
   return (
@@ -24,14 +31,17 @@ function NavBar() {
           <>
             <Link href="/signup" className="nav-link">Sign Up</Link>
             <Link href="/signin" className="nav-link">Sign In</Link>
-            <Link href = "/filtered" > Filter</Link>
+            
           </>
         ) : (
         <div>
           <button onClick={logout} className="nav-link">Sign Out</button>
-          <Link href="/admin" className="nav-link">Admin</Link>
+          
         </div>
         )}
+        
+        {admin && isAuthenticated  &&(<Link href="/admin" className="nav-link">Admin</Link>)}
+        
         
         <Link href="/cart" className="nav-link">
           Cart (

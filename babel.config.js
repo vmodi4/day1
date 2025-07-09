@@ -4,5 +4,6 @@ module.exports = {
       '@babel/preset-typescript',
       "next/babel"
     ],
+    plugins: ["@babel/plugin-proposal-class-properties"],
   };
   
