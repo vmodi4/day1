@@ -49,8 +49,7 @@ function Admin() {
     { field: "event_date", headerName: "Event Date", width: 150 },
     { field: "start_datetime", headerName: "Start Time", width: 200 },
     { field: "end_datetime", headerName: "End Time", width: 200 },
-    { field: "price", headerName: "Price", width: 150 },
-    { field: "image_url_2", headerName: "Image URL", width: 300 },
+     { field: "image_url_2", headerName: "Image URL", width: 300 },
   ];
 
   // Handlers for opening and closing dialogs

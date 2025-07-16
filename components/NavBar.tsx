@@ -11,12 +11,22 @@ function NavBar() {
   const router = useRouter(); 
   const Cart = useCart();
 
-  const logout = () => {
-    // Set the authenticated state to false
-    setIsAuthenticated(false);
-    router.push("/"); 
-
-    // pushing to the home page works. 
+  const logout = async () => {
+    try {
+      // Call the logout API to clear the cookie
+      await fetch("/api/logout", {
+        method: "POST",
+        credentials: "include", // Ensure cookies are sent with the request
+      });
+  
+      // Set the authenticated state to false
+      setIsAuthenticated(false);
+  
+      // Redirect to the home page
+      router.push("/");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   }
 
   return (

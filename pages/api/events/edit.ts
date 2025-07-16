@@ -1,11 +1,7 @@
-// this is where the create/update/delete api requests will be handled 
-
-// create - post request to the database- add another record(all fields will be requried)
+// This is where the create/update/delete API requests will be handled
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import db from "../../../data/db"; // Import your database connection
-import { eventTable } from "../../../data/schema"; // Import your events table schema
-import { eq } from "drizzle-orm";
+import { supabase } from "../../../data/supabase"; // Import your Supabase client
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -17,19 +13,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      // Insert the new event into the database
-      const newEvent = await db.insert(eventTable).values({
-        name,
-        description,
-        subtitle,
-        event_date,
-        start_datetime,
-        end_datetime,
-        price,
-        image_url_2,
-      });
+      // Insert the new event into the database using Supabase
+      const { data: newEvent, error } = await supabase
+        .from("events") // Replace "events" with your actual table name in Supabase
+        .insert([
+          {
+            name,
+            description,
+            subtitle,
+            event_date,
+            start_datetime,
+            end_datetime,
+            price,
+            image_url_2,
+          },
+        ])
+        .select("*") // Return the inserted record
+        .single(); // Ensure a single record is returned
 
-      res.status(201).json({  event: newEvent });
+      if (error) {
+        console.error("Error creating event:", error);
+        return res.status(500).json({ message: "Failed to create event." });
+      }
+
+      res.status(201).json({ event: newEvent });
     } catch (error) {
       console.error("Error creating event:", error);
       res.status(500).json({ message: "Internal server error." });
@@ -38,13 +45,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-
-
-  // going to put delete next since it will be easier to implement. 
-
-  // can't do else if since the previous statement has an else statement. 
-
-  
-        
 }
-  

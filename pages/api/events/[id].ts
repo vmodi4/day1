@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import db from "../../../data/db";
-import { eventTable } from "../../../data/schema";
-import { eq } from "drizzle-orm";
+import { supabase } from "../../../data/supabase"; // Import your Supabase client
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
@@ -16,56 +14,85 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case "GET":
         // Handle GET request
-        const event = await db.select().from(eventTable).where(eq(eventTable.id, event_id));
-        console.log("Event fetched:", event);
+        const { data: event, error: getError } = await supabase
+          .from("events(Vignesh)")
+          .select("*")
+          .eq("id", event_id)
+          .single();
+        
+        const {data: ticket_data, error: getError2} = await supabase
+          .from("event_ticket_types")
+          .select(` event_ticket_id,
+    event_id,
+    price,
+    total_quantity,
+    available_quantity,
+    ticket_types (types) -- Join with ticket_categories to get the ticket type name`)
+          .eq("event_id", event_id);
 
-        if (event.length === 0) {
+        if(getError2) {
+          console.error("Error fetching ticket types:", getError2);
+          return res.status(404).json({ message: "Ticket types not found." });
+        }
+
+        if (getError) {
+          console.error("Error fetching event:", getError);
           return res.status(404).json({ message: "Event not found." });
         }
 
-        return res.status(200).json(event[0]);
+        console.log("Event fetched:", event);
+        console.log("Ticket types fetched:", ticket_data);
+        //return res.status(200).json(event);
+        return res.status(200).json({ event, ticket_data });
 
       case "DELETE":
         // Handle DELETE request
-        const deletedEvent = await db.delete(eventTable).where(eq(eventTable.id, event_id));
-        console.log("Event deleted:", deletedEvent);
+        const { error: deleteError } = await supabase
+          .from("events")
+          .delete()
+          .eq("id", event_id);
 
-        if (deletedEvent.oid != null) {
-          return res.status(200).json({ message: "Event deleted successfully." });
-        } else {
+        if (deleteError) {
+          console.error("Error deleting event:", deleteError);
           return res.status(404).json({ message: "Event not found." });
         }
 
-        case "PUT": 
+        console.log("Event deleted:", event_id);
+        return res.status(200).json({ message: "Event deleted successfully." });
 
+      case "PUT":
+        // Handle PUT request
         const body = req.body;
 
         const updateFields = Object.entries(body).reduce((acc, [key, value]) => {
-            if (value !== null && value !== undefined && value !== "") {
-              acc[key] = value; // Include only non-empty fields
-            }
-            return acc;
-          }, {} as Record<string, any>);
-        
-          if (Object.keys(updateFields).length === 0) {
-            return res.status(400).json({ message: "No valid fields provided for update." });
+          if (value !== null && value !== undefined && value !== "") {
+            acc[key] = value; // Include only non-empty fields
           }
-        
-          const updatedEvent = await db.update(eventTable)
-            .set(updateFields)
-            .where(eq(eventTable.id, event_id));
-        
-          if (updatedEvent) {
-            return res.status(200).json({ message: "Event updated successfully.", event: updatedEvent });
-          } else {
-            return res.status(404).json({ message: "Event not found." });
+          return acc;
+        }, {} as Record<string, any>);
+
+        if (Object.keys(updateFields).length === 0) {
+          return res.status(400).json({ message: "No valid fields provided for update." });
         }
 
-        // then we will filter(no need for every field to be required)
+        const { data: updatedEvent, error: updateError } = await supabase
+          .from("events")
+          .update(updateFields)
+          .eq("id", event_id)
+          .select("*")
+          .single();
+
+        if (updateError) {
+          console.error("Error updating event:", updateError);
+          return res.status(404).json({ message: "Event not found." });
+        }
+
+        console.log("Event updated:", updatedEvent);
+        return res.status(200).json({ message: "Event updated successfully.", event: updatedEvent });
 
       default:
         // Handle unsupported methods
-        res.setHeader("Allow", ["GET", "DELETE,"]);
+        res.setHeader("Allow", ["GET", "DELETE", "PUT"]);
         return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {

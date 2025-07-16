@@ -16,6 +16,8 @@ type CartContextType = {
   clear: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  
+
 };
 
 // Create the CartContext
