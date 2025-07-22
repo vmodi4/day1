@@ -50,7 +50,10 @@ function NavBar() {
         </div>
         )}
         
-        {admin && isAuthenticated  &&(<Link href="/admin" className="nav-link">Admin</Link>)}
+        {admin && isAuthenticated  &&(<><Link href="/admin" className="nav-link">Admin</Link>
+        <Link href = "/request">Request</Link>
+        </>
+        )}
         
         
         <Link href="/cart" className="nav-link">

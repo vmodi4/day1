@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "GET") {
     try {
       // Fetch all users from the "users" table
-      const { data: users, error } = await supabase.from("users(Vignesh)").select("id, username, email");
+      const { data: users, error } = await supabase.from("usersVig").select("id, username, email");
 
       if (error) {
         console.error("Error fetching users:", error);

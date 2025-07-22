@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       // Check if user already exists
       const { data: existingUser, error: fetchError } = await supabase
-        .from("users(Vignesh)") // Replace "users" with your actual table name in Supabase
+        .from("usersVig") // Replace "users" with your actual table name in Supabase
         .select("id")
         .eq("email", email)
         .single(); // Ensure only one user is returned
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Insert user data into the database using Supabase
       const { data: newUser, error: insertError } = await supabase
-        .from("users(Vignesh)") // Replace "users" with your actual table name in Supabase
+        .from("usersVig") // Replace "users" with your actual table name in Supabase
         .insert([
           {
             username,

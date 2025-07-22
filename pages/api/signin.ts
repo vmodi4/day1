@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       // Retrieve user data from the Supabase database
       const { data: user, error: fetchError } = await supabase
-        .from("users(Vignesh)") // Replace "users" with your actual table name in Supabase
+        .from("usersVig") // Replace "users" with your actual table name in Supabase
         .select("id, email, password, role") // Select only the required fields
         .eq("email", email)
         .single(); // Ensure only one user is returned
