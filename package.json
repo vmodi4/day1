@@ -11,6 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@google/genai": "^1.11.0",
+    "@google/generative-ai": "^0.24.1",
     "@jstiava/chronos": "git+https://github.com/jstiava/chronos.git",
     "@mui/material": "^7.2.0",
     "@mui/x-data-grid": "^7.3.2",
