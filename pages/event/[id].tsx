@@ -115,26 +115,34 @@ function IndividualEventPage() {
 
 
   // there are multiple ticket types so we have to use the map function. 
-
   return (
     <div className="individual-event-page">
-      <h1>{event.name}</h1>
-      <p>{event.description}</p>
-      <p>Start-Time: {event.start_datetime}</p>
-      <p>End-Time: {event.end_datetime}</p>
+      <h1>{event?.name}</h1>
+      <p>{event?.description}</p>
+      <p>Start-Time: {event?.start_datetime}</p>
+      <p>End-Time: {event?.end_datetime}</p>
       <p>Ticket Types:</p>
       <ul>
         {tickets.map((ticket, index) => (
-          <li key={index}>Ticket: {ticket.ticket_types.types} 
-          <button onClick = {() => Cart.add(ticket)}>Price is {ticket.price}</button>
+          <li key={index}>
+            Ticket: {ticket.ticket_types.types}
+            <button onClick={() => Cart.add(ticket)}>Price is {ticket.price}</button>
           </li>
         ))}
       </ul>
-      
-      <button onClick={() => Cart.add(event)}>Add to Cart</button>
-      <button onClick ={() => new_AI_info}> AI Insight </button>
+
+      <button onClick={fetchAIInsight}>Generate AI Insight</button>
+
+      {loadingInsight && <p>Loading AI insight...</p>}
+      {aiInsight && (
+        <div className="ai-insight">
+          <h2>AI Insight</h2>
+          <div dangerouslySetInnerHTML={{ __html: aiInsight }} />
+        </div>
+      )}
     </div>
   );
+  
 }
 
 export default IndividualEventPage;

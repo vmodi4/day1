@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { name, start_datetime, end_datetime, subtitle, description } = req.body;
 
     // Validate the request body
-    if (!name || !start_datetime || !end_datetime || !location || !description) {
+    if (!name || !start_datetime || !end_datetime || !subtitle || !description) {
       return res.status(400).json({
         message: "Missing required fields: name, date, time, location, or description.",
       });
@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         - **Name:** ${name}
         - **Start_datetime:** ${start_datetime}
         - **End_datetime:** ${end_datetime}
+        - **Subtitle:** ${subtitle}
         -** event
         - **Description:** ${description}
 
